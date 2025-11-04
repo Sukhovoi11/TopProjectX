@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MiniGram+ — Create</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#1f7cd6">
+</head>
+<body data-theme="light">
+<header class="topbar">
+    <a href="index.html" class="back">←</a>
+    <div class="logo">Create</div>
+    <div style="width:48px"></div>
+</header>
+
+<main class="container create">
+    <div class="create-left">
+        <div class="cam-box">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" class="hidden"></canvas>
+            <div id="cam-placeholder" class="cam-placeholder">Camera not available — use upload instead</div>
+        </div>
+        <div class="cam-controls">
+            <button id="snap" class="primary">Take Photo</button>
+            <label class="btn file-btn">
+                Upload
+                <input id="file" type="file" accept="image/*" capture="environment" />
+            </label>
+        </div>
+    </div>
+
+    <div class="create-right">
+        <textarea id="caption" placeholder="Add a caption..." rows="6"></textarea>
+        <div class="meta-row">
+            <button id="get-loc" class="small">Add location</button>
+            <div id="geo" class="hint small"></div>
+        </div>
+        <div class="actions">
+            <button id="publish" class="primary">Publish</button>
+            <button id="clear" class="small">Clear</button>
+        </div>
+    </div>
+</main>
+
+<header class="topbar">
+    <div class="logo">MiniGram+</div>
+
+    <div class="top-actions">
+        <a href="index.html" class="top-link">Home</a>
+        <a href="add.html" class="top-link">Create</a>
+        <a href="profile.html" class="top-link">Profile</a>
+        <button id="theme-toggle" class="theme-btn">Theme</button>
+    </div>
+</header>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
