@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Login — MiniGram+">
+    <title>MiniGram+ — Login</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f7cd6">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+<main class="container auth-container" id="auth-root">
+    <h1 class="logo">MiniGram+</h1>
+
+    <section class="auth-box" id="login-box" aria-labelledby="login-title">
+        <h2 id="login-title">Login</h2>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required aria-required="true" autocomplete="username">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required aria-required="true" autocomplete="current-password">
+
+        <button type="button" id="login-btn" class="primary">Log In</button>
+
+        <p class="hint">No account? <button type="button" id="to-register" class="link-button">Register</button></p>
+    </section>
+
+    <section class="auth-box hidden" id="register-box" aria-labelledby="register-title">
+        <h2 id="register-title">Registration</h2>
+
+        <label for="reg-username">Username</label>
+        <input type="text" id="reg-username" name="reg-username" placeholder="Choose username" required aria-required="true" autocomplete="username">
+
+        <label for="reg-password">Password</label>
+        <input type="password" id="reg-password" name="reg-password" placeholder="Create password" required aria-required="true" autocomplete="new-password">
+
+        <button type="button" id="register-btn" class="primary">Create Account</button>
+
+        <p class="hint"><button type="button" id="to-login" class="link-button">Already have an account</button></p>
+    </section>
+</main>
+
+<script defer src="login.js"></script>
+</body>
+</html>

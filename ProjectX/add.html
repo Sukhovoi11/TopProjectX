@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MiniGram+ — Create</title>
+    <meta name="description" content="Create a new post on MiniGram+">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#1f7cd6">
+</head>
+<body data-theme="light">
+<header class="topbar" role="banner">
+    <a href="index.html" class="back" aria-label="Go back">←</a>
+    <h1 class="logo" style="font-size: 1.2rem;">Create</h1>
+    <div style="width:48px"></div>
+</header>
+
+<main class="container create">
+    <div class="create-left">
+        <div class="cam-box">
+            <video id="video" autoplay playsinline aria-label="Camera preview" muted></video>
+            <canvas id="canvas" class="hidden"></canvas>
+            <div id="cam-placeholder" class="cam-placeholder">Camera not available — use upload instead</div>
+        </div>
+        <div class="cam-controls">
+            <button type="button" id="snap" class="primary">Take Photo</button>
+            <label class="btn file-btn">
+                Upload
+                <input id="file" type="file" accept="image/*" capture="environment" />
+            </label>
+        </div>
+    </div>
+
+    <div class="create-right">
+        <textarea id="caption" placeholder="Add a caption..." rows="6" maxlength="500" aria-label="Post caption"></textarea>
+
+        <div class="meta-row">
+            <button type="button" id="get-loc" class="small">Add location</button>
+            <div id="geo" class="hint small"></div>
+        </div>
+        <div class="actions">
+            <button type="button" id="publish" class="primary">Publish</button>
+            <button type="button" id="clear" class="small">Clear</button>
+        </div>
+    </div>
+</main>
+
+<script defer src="db.js"></script>
+<script defer src="app.js"></script>
+</body>
+</html>

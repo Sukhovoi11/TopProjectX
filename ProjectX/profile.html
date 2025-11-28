@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MiniGram+ — Profile</title>
+    <meta name="description" content="User Profile and Settings — MiniGram+">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f7cd6">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+<header class="topbar" role="banner">
+    <a href="index.html" class="back" aria-label="Go back to feed">←</a>
+    <h1 class="logo" style="font-size: 1.2rem;">Profile</h1>
+    <div style="width:48px"></div>
+</header>
+
+<main class="container profile">
+    <section class="profile-header">
+        <div class="avatar-large" id="user-avatar" aria-hidden="true">👤</div>
+        <div class="profile-info">
+            <h3 id="user-name">User</h3>
+            <div class="hint" id="user-info">MiniGram+ demo</div>
+        </div>
+    </section>
+
+    <section class="settings">
+        <h4>Settings</h4>
+        <div class="setting-row">
+            <label>Theme</label>
+            <button type="button" id="theme-toggle-2" class="small">Toggle</button>
+        </div>
+        <div class="setting-row">
+            <label>Offline Mode</label>
+            <div id="online-status-2" class="hint">online</div>
+        </div>
+        <div class="setting-row">
+            <label>Account</label>
+            <button type="button" id="logout-btn" class="small danger">Log Out</button>
+        </div>
+    </section>
+
+    <section>
+        <h4>My Posts</h4>
+        <div id="my-posts" class="feed" aria-live="polite"></div>
+        <div id="empty-my" class="hint">No posts yet</div>
+    </section>
+</main>
+
+<div id="custom-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+        <h3 id="modal-title">Confirm Logout</h3>
+        <p>Are you sure you want to log out of your account?</p>
+        <div class="modal-actions">
+            <button type="button" id="modal-cancel" class="small">Cancel</button>
+            <button type="button" id="modal-confirm" class="small danger">Log Out</button>
+        </div>
+    </div>
+</div>
+
+<script defer src="db.js"></script>
+<script defer src="app.js"></script>
+<script>
+    (function(){
+        // Używamy replace() dla czystej historii przeglądania
+        const saved = JSON.parse(sessionStorage.getItem('mg_session') || '{}');
+        if (!saved.user) {
+            window.location.replace('login.html');
+            return;
+        }
+
+        const userNameEl = document.getElementById('user-name');
+        const avatarEl = document.getElementById('user-avatar');
+        if (userNameEl) userNameEl.textContent = saved.user;
+        if (avatarEl) avatarEl.textContent = saved.user[0]?.toUpperCase() || '👤';
+
+        const logoutBtn = document.getElementById('logout-btn');
+        const customModal = document.getElementById('custom-modal');
+        const modalConfirmBtn = document.getElementById('modal-confirm');
+        const modalCancelBtn = document.getElementById('modal-cancel');
+
+        logoutBtn?.addEventListener('click', () => customModal.classList.remove('hidden'));
+        modalCancelBtn?.addEventListener('click', () => customModal.classList.add('hidden'));
+
+        // Poprawiono Błąd 14: Dodano obsługę błędów (try-catch)
+        modalConfirmBtn?.addEventListener('click', () => {
+            try {
+                // Usuwamy token sesji z sessionStorage
+                sessionStorage.removeItem('mg_session');
+                customModal.classList.add('hidden');
+                // Używamy replace() dla lepszego zarządzania historią
+                window.location.replace('login.html');
+            } catch (e) {
+                console.error('Logout error:', e);
+                // Komunikat o błędzie (zamiast alert, używamy showToast, który jest w app.js, lub prostego elementu)
+                const t = document.createElement('div');
+                t.className = 'toast-notice';
+                t.textContent = 'Error during logout. Please try again.';
+                document.body.appendChild(t);
+                setTimeout(()=>t.remove(), 3000);
+            }
+        });
+    })();
+</script>
+</body>
+</html>

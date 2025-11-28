@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl"> <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="MiniGram+ — Share your moments with friends">
+    <meta name="keywords" content="social media, photos, sharing">
+    <meta property="og:title" content="MiniGram+ — Feed">
+    <meta property="og:description" content="MiniGram+ — Share your moments with friends">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+
+    <title>MiniGram+ — Feed</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f7cd6">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+<header class="topbar" role="banner">
+    <h1 class="logo">MiniGram+</h1>
+    <nav class="top-actions" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="top-link" aria-label="Strona główna">Home</a>
+        <a href="add.html" class="top-link" aria-label="Utwórz nowy post">Create</a>
+        <a href="profile.html" class="top-link" aria-label="Profil użytkownika">Profile</a>
+        <button type="button" id="theme-toggle" class="theme-btn" aria-label="Przełącz motyw">Theme</button>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="status" aria-live="polite">
+        <div id="connection">Status: <span id="online-status">online</span></div>
+        <div id="offline-toast" class="toast hidden" role="status">No Connection — You Are Offline</div>
+    </section>
+
+    <section id="feed" class="feed" aria-live="polite">
+    </section>
+
+    <div id="empty" class="hint">Feed is empty. Press Create to add a post!</div>
+</main>
+
+<script defer src="db.js"></script>
+<script defer src="app.js"></script>
+
+<script>
+    // Basic auth check (moved to inline small snippet to be executed after scripts)
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            // Używamy sessionStorage do sesji logowania
+            const session = sessionStorage.getItem('mg_session');
+            if (!session) {
+                // Używamy replace() zamiast href, aby nie dodawać strony logowania do historii przeglądania
+                window.location.replace('login.html');
+            }
+        } catch (e) {
+            console.error('Auth check error', e);
+            window.location.replace('login.html');
+        }
+    });
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(() => console.log('Service Worker registered'))
+            .catch(e => console.warn('SW error', e));
+    }
+</script>
+</body>
+</html>
